@@ -17,13 +17,19 @@ class AuthAdmin extends Controller
 
     public function dologin(LoginRequest $request)
     {
-        $remember_me = $request->has('remember_me') ? true : false;
+        try {
+            $remember_me = $request->has('remember_me') ? true : false;
 
-        if (auth()->guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)) {
-            // notify()->success('تم الدخول بنجاح  ');
-            return redirect()->route('admin.dashboard');
+            if (auth()->guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->input('password'),'status' => 1], $remember_me)) {
+                // notify()->success('تم الدخول بنجاح  ');
+                return redirect()->route('admin.dashboard');
+            }
+        }catch (Exception $exception){
+            return redirect()->back()->with(['error' => 'هناك خطا بالبيانات']);
         }
+
         // notify()->error('خطا في البيانات  برجاء المجاولة مجدا ');
+
         return redirect()->back()->with(['error' => 'هناك خطا بالبيانات']);
     }
 

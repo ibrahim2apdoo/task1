@@ -8,7 +8,7 @@
  * @version     2.5.1
  * @file        dataTables.keyTable.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
+ * @Testimonial     www.sprymedia.co.uk/Testimonial
  * @copyright   Copyright 2009-2019 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:

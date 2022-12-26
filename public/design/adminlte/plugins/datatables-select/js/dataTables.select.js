@@ -9,7 +9,7 @@
  * @version     1.3.1
  * @file        dataTables.select.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     datatables.net/forums
+ * @Testimonial     datatables.net/forums
  * @copyright   Copyright 2015-2019 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:

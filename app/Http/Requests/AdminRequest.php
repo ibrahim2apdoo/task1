@@ -28,7 +28,7 @@ class AdminRequest extends FormRequest
             'name_ar'=>'required|string',
             'name_en'=>'required|string',
             'email'=>'required|unique:admins,email,'.$this->id,
-            'password'=>'required|min:6',
+            'password'=>'required_without:id',
         ];
     }
     public function messages()

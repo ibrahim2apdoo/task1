@@ -8,7 +8,7 @@
  * @version     1.5.2
  * @file        dataTables.colReorder.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
+ * @Testimonial     www.sprymedia.co.uk/Testimonial
  * @copyright   Copyright 2010-2019 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:

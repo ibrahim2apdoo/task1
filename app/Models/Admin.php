@@ -21,4 +21,7 @@ class Admin extends Authenticatable{
     public function Is_admin(){
         return $this->Is_admin == 1 ? trans('admin.admin') : trans('admin.noadmin') ;
     }
+    public function categories(){
+        return $this->hasMany('App\Models\Admin','added_by');
+    }
 }

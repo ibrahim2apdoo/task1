@@ -1,8 +1,11 @@
-@extends('UserFront.layouts.app')
+@extends('website.home')
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="
+    margin-top: 200px;
+    margin-bottom: 100px;
+">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>

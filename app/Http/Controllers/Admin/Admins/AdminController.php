@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Admins;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -24,7 +23,7 @@ class AdminController extends Controller
             $admin->email = $request->email;
             $admin->password = Hash::make($request['password']);
             $admin->save();
-            return redirect()->route('admin.AllAdmins');
+            return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.success')]);
         }catch (\Exception $exception){
             return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
         }
@@ -84,6 +83,21 @@ class AdminController extends Controller
                 $admin->delete();
             }
             return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.delete')]);
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+        }
+    }
+    public function changeStatus($admin_id)
+    {
+        try {
+            $admin = Admin::find($admin_id);
+            if (!$admin) {
+                return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            }
+            $active = $admin->status == 0 ? 1 : 0;
+            $admin->update([$admin->status=$active]);
+            return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.update')]);
 
         } catch (\Exception $exception) {
             return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
