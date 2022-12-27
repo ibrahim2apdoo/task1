@@ -3,8 +3,6 @@
 <section id="slider-sec" class="slider-sec parallax"
          style="background: url(https://megaone.acrothemes.com/book-shop/img/banner1.3.jpg) center 34.0188px / cover no-repeat fixed;">
 </section>
-<div class=" parallax">
-</div>
 <section class="container">
 
     <!-- /.row -->
@@ -95,10 +93,11 @@
                         <div>
                             <form action="{{ route('order.add') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $item->id}}">
-                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                <input type="hidden" name="quantity" value="{{ $item->quantity }}">
-                                <button class="btn btn-success ">Add Order</button>
+                                @foreach ($cartItems as $item)
+                                    <input type="hidden" name="products[]" value="{{$item->id}}">
+                                    <input type="hidden" name="Total" value="{{ Cart::getTotal() }}">
+                                @endforeach
+                                <button class="btn btn-success">Add Order</button>
                             </form>
                         </div>
                             @endif

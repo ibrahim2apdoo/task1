@@ -73,6 +73,10 @@
 <script type="text/javascript" src="{{url('/')}}/website/website/js/jquery-3.2.1.min.js" ></script>
 <script type="text/javascript" src="{{url('/')}}/website/website/js/bootstrap.js" ></script>
 <script type="text/javascript" src="{{url('/')}}/website/website/js/main.js" ></script>
+<script type="text/javascript" src="{{url('/')}}/website/website/js/jquery.bxslider.min.js" ></script>
+<script type="text/javascript" src="{{url('/')}}/website/website/js/jquery.mixitup.js" ></script>
+<script type="text/javascript" src="{{url('/')}}/website/website/js/jquery.nicescroll.min.js" ></script>
+<script type="text/javascript" src="{{url('/')}}/website/website/js/jquery.js" ></script>
 
 </body>
 </html>

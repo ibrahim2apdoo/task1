@@ -15,7 +15,6 @@ class OrderRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,9 +23,8 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'=>'required',
-            'product_id'=>'required',
-            'quantity'=>'required'
+            'products'=>'array|required',
+            'Total'=>'required'
         ];
     }
 }

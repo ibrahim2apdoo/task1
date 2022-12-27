@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Partner;
 use App\Models\Product;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -28,7 +29,8 @@ class HomeController extends Controller
         $categories=Category::orderBy('id','desc')->paginate(3);
         $products=Product::orderBy('id','desc')->paginate(6);
         $partners=Partner::where('status',true)->paginate(6);
-        return view('website.index',compact( 'categories','products','partners'));
+        $Testimonials=Testimonial::where('status',true)->paginate(6);
+        return view('website.index',compact( 'categories','products','partners','Testimonials'));
     }
     public function logout(Request $request)
     {

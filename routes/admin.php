@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Admins\AdminController;
 use App\Http\Controllers\Admin\AuthAdmin;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Orders\OrderController;
 use App\Http\Controllers\Admin\Partner\PartnerController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\Testimonial\TestimonialController;
@@ -69,11 +70,17 @@ Route::group(['prefix' => 'admin'], function () {
         ################### End Partner Control Dashboard #####################################
 
 
-        ################### Start Partner Control Dashboard #####################################
+        ################### Start Testimonial Control Dashboard #####################################
         Route::get('testimonial/showindex',[TestimonialController::class , 'ShowIndex'])->name('testimonial.showindex');
         Route::get('testimonial/{id}',[TestimonialController::class , 'destroy'])->name('testimonial.destroy');
         Route::get('changeStatus/{id}', [TestimonialController::class, 'changeStatus'])->name('testimonial.status');
-        ################### End Partner Control Dashboard #####################################
+        ################### End Testimonial Control Dashboard #####################################
+
+        ################### Start Orders Control Dashboard #####################################
+        Route::get('orders/showindex',[OrderController::class , 'ShowIndex'])->name('orders.showindex');
+        Route::get('orders/{id}',[OrderController::class , 'destroy'])->name('orders.destroy');
+        Route::get('showDetails/{id}', [OrderController::class, 'showDetails'])->name('orders.showDetails');
+        ################### End Orders Control Dashboard #####################################
     });
 });
 Route::get('admin/logout', [AuthAdmin::class, 'logout'])->name('admin.logout');

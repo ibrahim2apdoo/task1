@@ -19,7 +19,6 @@
                 <!-- /.card -->
             </div>
             <!-- /.col -->
-
         </div>
         <!-- /.row -->
         @if($categories->products->count() != 0)
@@ -39,10 +38,8 @@
 <tr>
     <td>
         <div class="d-table product-detail-cart">
-
             <div class="media">
                 <div class="row no-gutters">
-
                     <div class="col-12 col-lg-2 product-detail-cart-image">
                         <a class="shopping-product" href="javascript:void(0)">
                             @if(!empty($product-> image))
@@ -50,7 +47,6 @@
                             @endif
                         </a>
                     </div>
-
                     <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
                         <div class="media-body ml-lg-3">
                             <h4 class="product-name">
@@ -68,7 +64,8 @@
     </td>
     <td class="text-center">
         <div class="quote text-center mt-1">
-            <input type="number" placeholder="1" class="quote" min="1" max="{{$product-> quantity}}">
+            <input type="number" class="count qty " name="quantity"
+                   value="0" min="1"  max="{{$product->first()->quantity}}" >
         </div>
     </td>
     <td>
@@ -100,9 +97,6 @@
 
     </div>
 </div>
-<!--                            <div class="col-6  coupon text-left">-->
-<!--                                <a href="shop-cart.html" class="btn pink-color-black-gradient-btn ">CHECKOUT</a>-->
-<!--                            </div>-->
 </div>
 </div>
 </div>
@@ -184,8 +178,6 @@
 <h2 style="text-align: center"> {{trans('admin.This_Category_Is_Empty')}} </h2>
 </div>
 @endif
-<!-- /.row -->
-
 </section>
 
 @endsection

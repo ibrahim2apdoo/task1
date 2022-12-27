@@ -62,8 +62,8 @@
                                                     <div class="quantity" style="float: right;">
                                                         <span class='minus'> - </span>
                                                         <input type="number" class="count qty " name="quantity"
-                                                               value="0" min="1"  max="{{$product->first()->quantity}}" >
-                                                        <span class='plus'> + </span>
+                                                               value="0" min="1"  max="{{$product->quantity}}" >
+                                                        <span class='plus' > + </span>
                                                     </div>
                                                 </div>
                                                 <button class="btn green-color-yellow-gradient-btn">Add To Cart</button>

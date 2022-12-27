@@ -11,7 +11,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans('admin.Dashboard')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"> {{trans('admin.Testimonial')}}
+                                <li class="breadcrumb-item"> {{trans('admin.orders')}}
                                 </li>
 
                             </ol>
@@ -24,7 +24,7 @@
                     <div class="col-lg-12 col-md-12 col-xm-12">
                         <div class="card ">
                             <div class="card-header">
-                                <h4 class="card-title" id="basic-layout-form"> {{trans('admin.Testimonial')}} </h4>
+                                <h4 class="card-title" id="basic-layout-form"> {{trans('admin.orders')}} </h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -43,30 +43,23 @@
                                     <tr>
                                         <th> {{trans('admin.User_Name')}} </th>
                                         <th>{{trans('admin.User_E-mail')}}</th>
-                                        <th style="width: 60%;">{{trans('admin.opinion')}}</th>
-                                        <th> {{trans('admin.status')}} </th>
+                                        <th> {{trans('admin.Total')}} </th>
                                         <th> {{trans('admin.actions')}} </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($testimonials as $testimonial)
+                                    @foreach($orders as $order)
                                         <tr>
 
-                                            <td> {{$testimonial->user->name}} </td>
-                                            <td> {{$testimonial->user->email}} </td>
-                                            <td>{{$testimonial->opinion}}</td>
-                                            <td>{{$testimonial->getActive()}}</td>
-                                            <td>
-                                                <a class="btn btn-danger" href="{{route('testimonial.destroy',$testimonial->id)}}"> <i class="fa fa-trash"></i> </a>
-                                                <a href="{{route('testimonial.status',$testimonial->id)}}"
-                                                   class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                    @if($testimonial->status == 0)
-                                                        تفعيل
-                                                    @else
-                                                        اللغاء تفعيل
-                                                    @endif
-                                                </a>
-                                            </td>
+                                            <td> {{$order-> products()->name }} </td>
+{{--                                            <td> {{$order-> products->email}} </td>--}}
+{{--                                            <td>${{$order->Total}}</td>--}}
+{{--                                            <td>--}}
+{{--                                                <a class="btn btn-danger" href="{{route('orders.destroy',$order->id)}}"> <i class="fa fa-trash"></i> </a>--}}
+{{--                                                <a href="{{route('orders.showDetails',$order->id)}}"--}}
+{{--                                                   class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">{{trans('admin.showDetails')}}--}}
+{{--                                                </a>--}}
+{{--                                            </td>--}}
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -74,8 +67,7 @@
                                     <tr>
                                         <th> {{trans('admin.User_Name')}} </th>
                                         <th>{{trans('admin.User_E-mail')}}</th>
-                                        <th>{{trans('admin.opinion')}}</th>
-                                        <th> {{trans('admin.status')}} </th>
+                                        <th> {{trans('admin.Total')}} </th>
                                         <th> {{trans('admin.actions')}} </th>
                                     </tr>
                                     </tfoot>

@@ -41,8 +41,9 @@ class User extends Authenticatable
     public function Testimonial(){
         return $this->hasMany('App\Models\Testimonial','user_id');
     }
+
     public function orders()
     {
-        return $this->hasMany('App\Models\Order','user_id');
+        return $this->hasMany(Order::class);
     }
 }

@@ -22,6 +22,7 @@ class TestimonialController extends Controller
             Testimonial::create($data);
             return redirect()->back()->with(['success'=>trans('massage.success')]);
         }catch (\Exception $exception){
+            return $exception;
             return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
         }
 

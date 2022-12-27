@@ -38,6 +38,9 @@
         @include('website.home.ourCategory')
         <!-- end price section -->
         <!-- start price section -->
+        @include('website.Testimonial.index')
+        <!-- end price section -->
+        <!-- start price section -->
         @include('website.home.partner')
         <!-- end price section -->
 @endsection

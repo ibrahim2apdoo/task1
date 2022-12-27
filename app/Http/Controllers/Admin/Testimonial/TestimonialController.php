@@ -18,21 +18,6 @@ class TestimonialController extends Controller
         session()->flash('success','massage Deleted successful');
         return back();
     }
-//    public function changeStatus($testimonial_id)
-//    {
-//        try {
-//            $testimonial = Testimonial::find($testimonial_id);
-//            if (!$testimonial) {
-//
-//            }
-//            $active = $testimonial->status == 0 ? 1 : 0;
-//            $testimonial->update(['status'=>$active]);
-//            return redirect()->route('testimonial.showindex')->with(['success' => 'تم التحديث بنجاح']);
-//
-//        } catch (\Exception $exception) {
-//            return redirect()->route('testimonial.showindex')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-//        }
-//    }
     public function changeStatus($testimonial_id)
     {
         try {

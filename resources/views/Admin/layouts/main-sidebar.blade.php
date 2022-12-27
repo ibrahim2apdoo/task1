@@ -78,6 +78,19 @@
                             <li><a href="{{route('testimonial.showindex')}}">{{trans('admin.Testimonial')}}</a></li>
                         </ul>
                     </li>
+                    {{--start orders--}}
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#orders-menu">
+                            <div class="pull-left"><i class="fas fa-money-bill-wave-alt"></i><span
+                                    class="right-nav-text">{{trans('admin.orders')}}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="orders-menu" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{route('orders.showindex')}}">{{trans('admin.orders')}}</a></li>
+                        </ul>
+                    </li>
+                    {{--end orders--}}
                 </ul>
             </div>
         </div>
