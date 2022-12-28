@@ -20,10 +20,8 @@ class OrderController extends Controller
         if (!$orders){
             return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
         }
-          $orders=Order::with('products')->get();
-//        return dd($orders);
-        return view('admin.Orders.show',compact('orders'));
-
+         $products=$orders->products;
+        return view('admin.Orders.show',compact('products'));
     }
 
 }

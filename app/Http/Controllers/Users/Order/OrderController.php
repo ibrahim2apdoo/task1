@@ -12,13 +12,13 @@ class OrderController extends Controller
 {
     public function addOrder(OrderRequest $request)
     {
-
+//        return dd($request);
         try {
             $user = auth('web')->user();
-            $order = $user->orders()->create();
-            $order['Total']=$request->Total;
-            $order->products()->attach($request->products);
-            $order->save();
+            $order = $user->orders()->create(['Total' => request('Total')]);
+
+            $order->products()->attach($request->products );
+
             \Cart::clear();
             return redirect()->route('cart.list')->with(['success' => trans('massage.success')]);
         } catch (\Exception $exception) {

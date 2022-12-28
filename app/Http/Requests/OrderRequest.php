@@ -24,6 +24,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'products'=>'array|required',
+//            'quantity'=>'array|required',
             'Total'=>'required'
         ];
     }

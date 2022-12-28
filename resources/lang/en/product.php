@@ -8,6 +8,8 @@ return [
     'image'=>'Image',
     'name'=>' Name ',
     'description'=>' Description',
+    'price'=>' Price',
+    'ordersProduct'=>' Orders Product',
     'category_name'=>'Category Name',
     'delete'=>'Delete',
     'update'=>'Update',

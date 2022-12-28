@@ -9,6 +9,8 @@ return [
     'image'=>'الصوره',
     'name'=>'اسم المنتج ',
     'description'=>'وصف المنتج',
+    'price'=>'سعر المنتج',
+    'ordersProduct'=>'منتجات الاوردر',
     'category_name'=>'القسم التابع له ',
     'delete'=>'حذف',
     'update'=>'تعديل',

@@ -11,7 +11,9 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans('admin.Dashboard')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"> {{trans('admin.orders')}}
+                                <li class="breadcrumb-item"><a href="{{route('orders.showindex')}}">{{trans('admin.orders')}} </a>
+                                </li>
+                                <li class="breadcrumb-item"> {{trans('product.ordersProduct')}}
                                 </li>
 
                             </ol>
@@ -24,7 +26,7 @@
                     <div class="col-lg-12 col-md-12 col-xm-12">
                         <div class="card ">
                             <div class="card-header">
-                                <h4 class="card-title" id="basic-layout-form"> {{trans('admin.orders')}} </h4>
+                                <h4 class="card-title" id="basic-layout-form"> {{trans('product.ordersProduct')}} </h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -41,17 +43,26 @@
                                 <table id="example2" class="table table-bordered table-hover  ">
                                     <thead>
                                     <tr>
-                                        <th> {{trans('admin.User_Name')}} </th>
-                                        <th>{{trans('admin.User_E-mail')}}</th>
-                                        <th> {{trans('admin.Total')}} </th>
-                                        <th> {{trans('admin.actions')}} </th>
+                                        <th> {{trans('product.name')}} </th>
+                                        <th>{{trans('product.price')}}</th>
+                                        <th>{{trans('product.description')}}</th>
+                                        <th>{{trans('product.image')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($orders as $order)
+                                    @foreach($products as $product)
                                         <tr>
 
-                                            <td> {{$order-> products()->name }} </td>
+                                            <td> {{$product ->name }} </td>
+                                            <td> {{$product ->price }} </td>
+                                            <td> {{$product ->description }} </td>
+                                            <td>
+                                                @if(!empty($product->image))
+                                                    <div style="width: 100px; height: 100px">
+                                                        <img src="{{asset($product->image)}}" style="width: 100%;height: 100%;">
+                                                    </div>
+                                                @endif
+                                            </td>
 {{--                                            <td> {{$order-> products->email}} </td>--}}
 {{--                                            <td>${{$order->Total}}</td>--}}
 {{--                                            <td>--}}
@@ -65,10 +76,10 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th> {{trans('admin.User_Name')}} </th>
-                                        <th>{{trans('admin.User_E-mail')}}</th>
-                                        <th> {{trans('admin.Total')}} </th>
-                                        <th> {{trans('admin.actions')}} </th>
+                                        <th> {{trans('product.name')}} </th>
+                                        <th>{{trans('product.price')}}</th>
+                                        <th>{{trans('product.description')}}</th>
+                                        <th>{{trans('product.image')}}</th>
                                     </tr>
                                     </tfoot>
                                 </table>
