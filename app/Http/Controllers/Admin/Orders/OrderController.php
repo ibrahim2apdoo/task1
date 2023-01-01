@@ -14,6 +14,11 @@ class OrderController extends Controller
 //        return  dd($orders);
         return view('admin.Orders.index',compact('orders'));
     }
+
+
+
+
+
     public function showDetails($order_id){
 
         $orders =Order::find($order_id);
@@ -21,7 +26,22 @@ class OrderController extends Controller
             return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
         }
          $products=$orders->products;
-        return view('admin.Orders.show',compact('products'));
+
+        return view('admin.Orders.show',compact('products' ));
+    }
+
+
+
+
+
+
+
+
+    public function destroy($id){
+        $testimonials=Order::find($id);
+        $testimonials->delete();
+        session()->flash('success','massage Deleted successful');
+        return back();
     }
 
 }

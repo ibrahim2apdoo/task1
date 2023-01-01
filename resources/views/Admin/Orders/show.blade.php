@@ -44,8 +44,10 @@
                                     <thead>
                                     <tr>
                                         <th> {{trans('product.name')}} </th>
-                                        <th>{{trans('product.price')}}</th>
                                         <th>{{trans('product.description')}}</th>
+                                        <th>{{trans('product.price')}}</th>
+                                        <th>{{trans('product.quantity')}}</th>
+                                        <th>{{trans('product.totalPrice')}}</th>
                                         <th>{{trans('product.image')}}</th>
                                     </tr>
                                     </thead>
@@ -54,8 +56,10 @@
                                         <tr>
 
                                             <td> {{$product ->name }} </td>
-                                            <td> {{$product ->price }} </td>
                                             <td> {{$product ->description }} </td>
+                                            <td> ${{$product ->price }} </td>
+                                            <td> {{$product ->pivot->quantity }} </td>
+                                            <td> ${{$product ->pivot->quantity*$product ->price }} </td>
                                             <td>
                                                 @if(!empty($product->image))
                                                     <div style="width: 100px; height: 100px">
@@ -77,8 +81,10 @@
                                     <tfoot>
                                     <tr>
                                         <th> {{trans('product.name')}} </th>
-                                        <th>{{trans('product.price')}}</th>
                                         <th>{{trans('product.description')}}</th>
+                                        <th>{{trans('product.price')}}</th>
+                                        <th>{{trans('product.quantity')}}</th>
+                                        <th>{{trans('product.totalPrice')}}</th>
                                         <th>{{trans('product.image')}}</th>
                                     </tr>
                                     </tfoot>

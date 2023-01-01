@@ -115,7 +115,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput2"> {{trans('product.yourProduct')}} </label>
                                                             <select name="category_id" class="select2 form-control" style="height: 50px;">
@@ -130,6 +130,28 @@
                                                             </select>
                                                             @error('category_id')
                                                             <span class="text-danger"> {{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1">  {{trans('product.quantity')}} </label>
+                                                            <input type="text" value="{{$products->quantity}}" name="quantity"
+                                                                   class="form-control"
+                                                                   placeholder="  {{trans('product.quantity')}} ">
+                                                            @error("quantity")
+                                                            <span class="text-danger">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1">  {{trans('product.price')}} </label>
+                                                            <input type="text" value="{{$products->price}}" name="price"
+                                                                   class="form-control"
+                                                                   placeholder="  {{trans('product.price')}} ">
+                                                            @error("price")
+                                                            <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
                                                     </div>

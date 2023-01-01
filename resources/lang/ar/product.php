@@ -3,6 +3,8 @@
 return [
 
     'product'=>'المنتجات الرئيسيه',
+    'quantity'=>'الكميه',
+    'totalPrice'=>'اجمالي السعر للمنتج ',
     'product_list'=>'عرض جميع المنتجات ',
     'product_add'=>'اضافه منتج جديد',
     'product_edit'=>'تعديل منتج ',

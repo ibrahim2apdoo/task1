@@ -75,6 +75,8 @@ class ProductController extends Controller
                     $products->name = ['en' => $request->name_en, 'ar' => $request->name_ar],
                     $products->description = ['en' => $request->description_en, 'ar' => $request->description_ar],
                     $products->category_id = $request->category_id,
+                    $products->quantity = $request->quantity,
+                    $products->price = $request->price,
                 ]);
                 if ($request->has('image')) {
                     $filePath = UploadImage('categories', $request->image);

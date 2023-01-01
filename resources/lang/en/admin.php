@@ -146,6 +146,6 @@ return [
     'What_Our_Clinets_Say' => 'What Our Clinets Say ',
     'Clinets_one' => 'Aenean imperdiet. Etiam ultricies nisi vel augue men tuhi spectrum alle me  ',
     'orders'=>'Orders',
-    'Total'=>'Total Price',
+    'Total'=>'Total For Order ',
     'showDetails'=>'Show Details',
 ];

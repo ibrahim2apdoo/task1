@@ -19,7 +19,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category', 'category_id', 'id');
     }
     public function orders(){
-        return $this->belongsToMany('App\Models\Order','order_products','product_id','order_id','id','id') ;
-//        return $this->belongsToMany('App\Models\Order','order_products','product_id','order_id','id','id')->withPivot(['quantity']);
+//        return $this->belongsToMany('App\Models\Order','order_products','product_id','order_id','id','id') ;
+        return $this->belongsToMany('App\Models\Order','order_products','product_id','order_id','id','id')->withPivot( 'quantity' );
     }
 }

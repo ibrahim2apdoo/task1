@@ -44,6 +44,7 @@
                                 <th>{{trans('product.image')}}</th>
                                 <th> {{trans('product.name')}} </th>
                                 <th>{{trans('product.description')}}</th>
+                                <th>{{trans('product.quantity')}}</th>
                                 <th>{{trans('product.category_name')}}</th>
                                 <th> {{trans('product.update')}} </th>
                                 <th> {{trans('product.delete')}} </th>
@@ -61,6 +62,7 @@
                                     </td>
                                     <td> {{$product->name}} </td>
                                     <td>{{$product->description}}</td>
+                                    <td>{{$product->quantity}}</td>
                                     <td>{{$product->category->name}}</td>
                                     <td>
                                         <a class="btn btn-primary" href="{{ route('Product.edit',$product->id) }}"> <i class="fa fa-edit"></i> </a>
@@ -76,6 +78,7 @@
                                 <th>{{trans('product.image')}}</th>
                                 <th> {{trans('product.name')}} </th>
                                 <th>{{trans('product.description')}}</th>
+                                <th>{{trans('product.quantity')}}</th>
                                 <th>{{trans('product.category_name')}}</th>
                                 <th> {{trans('product.update')}} </th>
                                 <th> {{trans('product.delete')}} </th>

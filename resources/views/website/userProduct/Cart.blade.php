@@ -95,7 +95,7 @@
                                 @csrf
                                 @foreach ($cartItems as $item)
                                     <input type="hidden" name="products[]" value="{{$item->id}}">
-{{--                                    <input type="hidden" name="quantity[]" value="{{$item->quantity}}">--}}
+                                    <input type="hidden" name="quantity[]" value="{{$item->quantity}}">
                                     <input type="hidden" name="Total" value="{{ Cart::getTotal() }}">
                                 @endforeach
                                 <button class="btn btn-success">Add Order</button>

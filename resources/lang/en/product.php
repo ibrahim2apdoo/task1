@@ -6,6 +6,8 @@ return [
     'product_add'=>' Add New Product',
     'product_edit'=>' Edit Product',
     'image'=>'Image',
+    'quantity'=>'Quantity',
+    'totalPrice'=>'Total Price For One Product',
     'name'=>' Name ',
     'description'=>' Description',
     'price'=>' Price',
