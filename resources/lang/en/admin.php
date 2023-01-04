@@ -148,4 +148,8 @@ return [
     'orders'=>'Orders',
     'Total'=>'Total For Order ',
     'showDetails'=>'Show Details',
+    'changeStatusToPay'=>'Change Status To Pay',
+    'changeStatusToDelivered'=>'change Status To Delivered',
+    'DeliveredOrder'=>'This Order Is Delivered',
+    'ChangeStatus'=>'Change Status',
 ];

@@ -26,7 +26,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $categories=Category::orderBy('id','desc')->paginate(3);
+        $categories=Category::orderBy('id','desc')->simplePaginate(3);
         $products=Product::where('quantity','>',0)->paginate(6);
         $partners=Partner::where('status',true)->paginate(6);
         $Testimonials=Testimonial::where('status',true)->paginate(6);

@@ -43,5 +43,38 @@ class OrderController extends Controller
         session()->flash('success','massage Deleted successful');
         return back();
     }
+    public function changeStatusToPay($order_id){
+
+        try {
+            $order = Order::find($order_id);
+            if (!$order) {
+                return redirect()->back()->with(['error' => 'هذا المنتج غير موجود ']);
+            }
+            $active = $order->status == 'pending' ? 'pay' : 'pending';
+            $order->update([$order->status=$active]);
+            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
+
+    }
+
+    public function changeStatusToDelivered($order_id){
+
+        try {
+            $order = Order::find($order_id);
+            if (!$order) {
+                return redirect()->back()->with(['error' => 'هذا المنتج غير موجود']);
+            }
+            $active = $order->status == 'pay' ? 'deliveried' : 'pending';
+            $order->update([$order->status=$active]);
+            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
+
+    }
 
 }

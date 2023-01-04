@@ -12,7 +12,6 @@ class CartController extends Controller
     public function cartList()
     {
         $cartItems = \Cart::getContent();
-        // dd($cartItems);
         $product=Product::get('quantity');
         return view('website.userProduct.Cart', compact('cartItems','product' ));
     }

@@ -80,6 +80,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('orders/showindex',[OrderController::class , 'ShowIndex'])->name('orders.showindex');
         Route::get('orders/{id}',[OrderController::class , 'destroy'])->name('orders.destroy');
         Route::get('showDetails/{id}', [OrderController::class, 'showDetails'])->name('orders.showDetails');
+        Route::get('changeStatusToPay/{id}',[OrderController::class , 'changeStatusToPay'])->name('orders.changeStatusToPay');
+        Route::get('changeStatusToDelivered/{id}',[OrderController::class , 'changeStatusToDelivered'])->name('orders.changeStatusToDelivered');
         ################### End Orders Control Dashboard #####################################
     });
 });

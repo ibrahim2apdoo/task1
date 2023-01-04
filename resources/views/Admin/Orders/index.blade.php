@@ -44,7 +44,9 @@
                                         <th> {{trans('admin.User_Name')}} </th>
                                         <th>{{trans('admin.User_E-mail')}}</th>
                                         <th> {{trans('admin.Total')}} </th>
+                                        <th> {{trans('admin.status')}} </th>
                                         <th> {{trans('admin.actions')}} </th>
+                                        <th> {{trans('admin.ChangeStatus')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -54,12 +56,33 @@
                                             <td> {{$order->user->name}} </td>
                                             <td> {{$order->user->email}} </td>
                                             <td>${{$order->Total}}</td>
+                                            <td>{{$order->status}}</td>
                                             <td>
                                                 <a class="btn btn-danger" href="{{route('orders.destroy',$order->id)}}"> <i class="fa fa-trash"></i> </a>
                                                 <a href="{{route('orders.showDetails',$order->id)}}"
                                                    class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">{{trans('admin.showDetails')}}
                                                 </a>
+
                                             </td>
+                                            @if($order->status=='pending')
+                                            <td>
+                                                <a href="{{route('orders.changeStatusToPay',$order->id)}}"
+                                                    class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">{{trans('admin.changeStatusToPay')}}
+                                                </a>
+                                            </td>
+                                            @elseif($order->status=='pay')
+                                            <td>
+                                                <a href="{{route('orders.changeStatusToDelivered',$order->id)}}"
+                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{trans('admin.changeStatusToDelivered')}}
+                                                </a>
+                                            </td>
+                                            @else
+                                                <td>
+                                                    <p class="btn btn-outline-success btn-min-width box-shadow-3 mr-1 mb-1">
+                                                        {{trans('admin.DeliveredOrder')}}
+                                                    </p>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -68,7 +91,9 @@
                                         <th> {{trans('admin.User_Name')}} </th>
                                         <th>{{trans('admin.User_E-mail')}}</th>
                                         <th> {{trans('admin.Total')}} </th>
+                                        <th> {{trans('admin.status')}} </th>
                                         <th> {{trans('admin.actions')}} </th>
+                                        <th> {{trans('admin.ChangeStatus')}}</th>
                                     </tr>
                                     </tfoot>
                                 </table>

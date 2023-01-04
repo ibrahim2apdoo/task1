@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->float('Total');
-            $table->boolean('status')->default(false);
+            $table->enum('status',['pending','pay','deliveried'])->default('pending');
             $table->timestamps();
         });
     }

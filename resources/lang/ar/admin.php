@@ -121,4 +121,8 @@ return [
     'orders'=>'الطلبات',
     'Total'=>'الاجمالي سعر الاوردر ',
     'showDetails'=>'رؤيه التفاصيل',
+    'changeStatusToPay'=>'تغيير الحاله الي مدفوع',
+    'changeStatusToDelivered'=>'تغيير الحاله الي في الطريق',
+    'DeliveredOrder'=>'هذاالطلب في الطريق ',
+    'ChangeStatus'=>'تغيير حاله الطلب',
 ];
