@@ -52,12 +52,13 @@
 
 
                                         <div class="col-12 col-lg-7">
-                                            <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+{{--                                            <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">--}}
+                                            <form action="{{ route('cart.storetocart') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                                <input type="hidden" value="{{ $product->id }}" name="id">
-                                                <input type="hidden" value="{{ $product->name }}" name="name">
-                                                <input type="hidden" value="{{ $product->price }}" name="price">
-                                                <input type="hidden" value="{{ $product->image }}"  name="image">
+                                                <input type="hidden" value="{{ $product->id }}" name="product_id">
+{{--                                                <input type="hidden" value="{{ $product->name }}" name="name">--}}
+{{--                                                <input type="hidden" value="{{ $product->price }}" name="price">--}}
+{{--                                                <input type="hidden" value="{{ $product->image }}"  name="image">--}}
                                                 <div class="qty col-12 col-lg-3 d-lg-flex  align-items-lg-center d-inline-block">
                                                     <div class="quantity" style="float: right;">
                                                         <span class='minus'> - </span>
