@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     public function addOrder(OrderRequest $request)
     {
-//        return dd($request);
+
         try {
             DB::beginTransaction();
             $user = auth('web')->user();

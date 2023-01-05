@@ -4,7 +4,9 @@
          style="background: url(https://megaone.acrothemes.com/book-shop/img/banner1.3.jpg) center 34.0188px / cover no-repeat fixed;">
 </section>
 <section class="container">
-
+<?php
+    $total=0;
+    ?>
     <!-- /.row -->
     <div class="row pt-5">
         @include('website.layouts.massage')
@@ -49,13 +51,15 @@
                         <td>
                             <h4 class="text-center amount">${{$product->price}}</h4>
                         </td>
-                        <form action=" " method="POST">
+
+
+                        <form action="{{ route('cart.update') }}" method="POST">
                             @csrf
                             <td class="text-center">
                                 <div class="quote text-center mt-1">
 
                                     <input type="hidden" name="id" value="{{ $product->id}}">
-                                    <input type="number" name="quantity" value="{{ $product->quantity }}"
+                                    <input type="number" name="quantity" value="{{ $product->pivot->quantity }}"
                                            class="w-6 text-center bg-gray-300" min="1"
                                            max="{{$product->quantity}}"/>
                                 </div>
@@ -68,42 +72,48 @@
                             </td>
                         </form>
                         <td>
-{{--                            <form action="{{ route('cart.remove') }}" method="POST" style="margin: 0px;">--}}
-{{--                                @csrf--}}
-{{--                                <input type="hidden" value="{{ $item->id }}" name="id">--}}
-{{--                                <button class="btn btn-danger">x</button>--}}
-{{--                            </form>--}}
+                            <form action="{{ route('cart.remove',$product->id) }}" method="POST" style="margin: 0px;">
+                                @csrf
+                                <button class="btn btn-danger">x</button>
+                            </form>
                         </td>
                     </tr>
+                        <?php  $total +=$product->pivot->quantity * $product->price ?>
                     @endforeach
                 @endforeach
                 </tbody>
-
             </table>
             <div class="apply_coupon">
                 <div class="row">
                     <div class="col-12 text-left">
                         <div>
-                            <form action="" method="POST">
+                            <form action="{{ route('cart.clear') }}" method="POST">
                                 @csrf
+                        <input type="hidden" name="id" value="{{ $product->id}}">
                                 <button class="btn yellow-color-green-gradient-btn">Remove All Cart</button>
+
                                 <button class="btn green-color-yellow-gradient-btn ">CHECKOUT</button>
                             </form>
 
                         </div>
-{{--                        @if($cartItems->count()>0) {{ route('cart.clear') }} --}}
+
                         <div>
-{{--                            <form action="{{ route('order.add') }}" method="POST">--}}
-{{--                                @csrf--}}
-{{--                                @foreach ($cartItems as $item)--}}
-{{--                                    <input type="hidden" name="products[]" value="{{$item->id}}">--}}
-{{--                                    <input type="hidden" name="quantity[]" value="{{$item->quantity}}">--}}
-{{--                                    <input type="hidden" name="Total" value="{{ Cart::getTotal() }}">--}}
-{{--                                @endforeach--}}
-{{--                                <button class="btn btn-success">Add Order</button>--}}
-{{--                            </form>--}}
+                            <form action="{{ route('order.add') }}" method="POST">
+                                @csrf
+                                @foreach ($productList as $products)
+                                    @foreach($products -> products as $product)
+                                        <input type="hidden" name="products[]" value="{{$product->id}}">
+                                        <input type="hidden" name="quantity[]" value="{{$product->pivot->quantity}}">
+
+                                        <input type="hidden" name="Total" value="{{$total}}">
+
+                                @endforeach
+                                @endforeach
+
+                                <button class="btn btn-success">Add Order</button>
+                            </form>
                         </div>
-{{--                            @endif--}}
+
                     </div>
                     <!--                            <div class="col-6  coupon text-left">-->
                     <!--                                <a href="shop-cart.html" class="btn pink-color-black-gradient-btn ">CHECKOUT</a>-->
