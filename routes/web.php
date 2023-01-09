@@ -1,13 +1,14 @@
 <?php
 
+
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Product\ProductController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\HomeController;
-//use App\Http\Controllers\Users\CartController;
+use App\Http\Controllers\Users\Cart\CartController;
 use App\Http\Controllers\Users\Order\OrderController;
 use App\Http\Controllers\Users\Testimonial\TestimonialController;
 use Illuminate\Support\Facades\Route;
+
+//use App\Http\Controllers\Users\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
+Route::get('/', [\App\Http\Controllers\Users\HomeController::class, 'index'])->name('home');
+Route::get('/logout', [\App\Http\Controllers\Users\HomeController::class, 'logout'])->name('logout');
 
 
 Route::get('/show_product/{id}',[CategoryController::class , 'show_product'])->middleware('auth');

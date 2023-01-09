@@ -19,20 +19,24 @@
 </head>
 <body>
 <?php
-    use App\Http\Controllers\CartController;
-    $total=CartController::cartItem();
-    ?>
+
+use App\Http\Controllers\Users\Cart\CartController;
+
+$total = CartController::cartItem();
+?>
 <nav class="navbar navbar-inverse navbar-inverse navbar-fixed-top shadow-sm navbar-expand-md">
     <div class="container">
 
         <!-- Brand and toggle get grouped for better mobile display -->
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="{{ __('Toggle navigation') }}">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -46,9 +50,9 @@
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         @if($total!=0)
-                        {{ $total}}
+                            {{ $total}}
                         @else
-                        0
+                            0
                         @endif
                     </a></li>
                 @guest
@@ -62,7 +66,8 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
 
@@ -80,13 +85,15 @@
                     </li>
                 @endguest
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ LaravelLocalization::getCurrentLocaleNative() }}
                     </a>
                     <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <div class="dropdown-divider"></div>
                         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                               href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                 <!-- Message Start -->
                                 <div class="media">
                                     <div class="media-body">
