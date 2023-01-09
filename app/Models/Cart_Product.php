@@ -13,7 +13,5 @@ class Cart_Product extends Model
         'product_id',
         'quantity',
     ];
-    public function products(){
 
-    }
 }

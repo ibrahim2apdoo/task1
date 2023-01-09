@@ -4,6 +4,7 @@
          style="background: url(https://megaone.acrothemes.com/book-shop/img/banner1.3.jpg) center 34.0188px / cover no-repeat fixed;">
 </section>
 <section class="container">
+    @if(!empty($productList))
 <?php
     $total=0;
     ?>
@@ -23,6 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 @foreach ($productList as $products)
                     @foreach($products -> products as $product)
                     <tr>
@@ -83,6 +85,7 @@
                 @endforeach
                 </tbody>
             </table>
+            @if(empty( $productList -> products ))
             <div class="apply_coupon">
                 <div class="row">
                     <div class="col-12 text-left">
@@ -104,7 +107,6 @@
                                     @foreach($products -> products as $product)
                                         <input type="hidden" name="products[]" value="{{$product->id}}">
                                         <input type="hidden" name="quantity[]" value="{{$product->pivot->quantity}}">
-
                                         <input type="hidden" name="Total" value="{{$total}}">
 
                                 @endforeach
@@ -115,10 +117,9 @@
                         </div>
 
                     </div>
-                    <!--                            <div class="col-6  coupon text-left">-->
-                    <!--                                <a href="shop-cart.html" class="btn pink-color-black-gradient-btn ">CHECKOUT</a>-->
-                    <!--                            </div>-->
+
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -162,7 +163,7 @@
                     <tr>
                         <td>Subtotal</td>
                         <div>
-{{--                            Total: ${{ Cart::getTotal() }}--}}
+                            Total: ${{ $total }}
                         </div>
                     </tr>
                     <tr>
@@ -174,7 +175,7 @@
                                         <input type="radio" id="flat-rate" name="shipping" class="custom-control-input"
                                                checked="">
                                         <label class="custom-control-label" for="flat-rate">Flat Rate :
-{{--                                            ${{ Cart::getTotal() }}--}}
+                                            ${{ $total }}
                                         </label>
                                     </div>
                                 </li>
@@ -197,7 +198,7 @@
                     </tr>
                     <tr>
                         <td>Total</td>
-{{--                        <td> ${{ Cart::getTotal() }}--}}
+                        <td> ${{ $total }}
                         </td>
                     </tr>
                     </tbody>
@@ -206,6 +207,11 @@
         </div>
     </div>
     <!-- /.row -->
+    @else
+        <div class="alert-danger" style="height: 150px">
+            <h1 class="text-center" style="padding-top: 5%"> Your Cart Is Empty </h1>
+        </div>
+    @endif
 
 </section>
 

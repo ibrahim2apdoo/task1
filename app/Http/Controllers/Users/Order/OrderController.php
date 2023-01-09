@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Users\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Models\Cart;
+use App\Models\Cart_Product;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -13,7 +15,7 @@ class OrderController extends Controller
 {
     public function addOrder(OrderRequest $request)
     {
-
+//dd($request);
         try {
             DB::beginTransaction();
             $user = auth('web')->user();
@@ -23,23 +25,19 @@ class OrderController extends Controller
 
             $products=$request->products;
             $quantities=$request->quantity;
-             for ($i=0; $i<count($products); $i++){
-                 $product=Product::where('id',$products[$i])->first();
-                 // update base table product add new quantity after insert order quantity
-                 $product->update(['quantity'=>$product->quantity-$quantities[$i]]);
-                 //insert into orderProduct order id product id and quantity for only product
-                 OrderProduct::create(['order_id'=>$order->id,'product_id'=>$products[$i],'quantity'=>$quantities[$i]]);
-             }
-
-
-
-            \Cart::clear();
+            for ($i=0; $i<count($products); $i++){
+                $product=Product::where('id',$products[$i])->first();
+                // update base table product add new quantity after insert order quantity
+                $product->update(['quantity'=>$product->quantity-$quantities[$i]]);
+                //insert into orderProduct order id product id and quantity for only product
+                OrderProduct::create(['order_id'=>$order->id,'product_id'=>$products[$i],'quantity'=>$quantities[$i]]);
+            }
+            Cart::where('user_id', auth()->user()->id)->delete();
             DB::commit();
-            return redirect()->route('cart.list')->with(['success' => trans('massage.success')]);
+            return redirect()->route('cart.cartlist')->with(['success' => trans('massage.success')]);
         } catch (\Exception $exception) {
             return $exception->getMessage();
             return redirect()->back()->withErrors(['error' => trans('massage.error')]);
         }
     }
-
 }

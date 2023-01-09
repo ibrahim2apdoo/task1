@@ -17,7 +17,12 @@ class Cart extends Model
         return $this->belongsTo('App\Models\User','user_id');
     }
     public function products(){
-        return $this->belongsToMany('App\Models\Product','cart__products','cart_id','product_id','id','id')->withPivot( 'quantity');
+        return $this->belongsToMany('App\Models\Product','cart__products','cart_id','product_id','id','id')
+            ->withPivot( 'quantity')->withTimestamps();
+    }
+    public function product()
+    {
+        return $this->hasMany(Product::class);
     }
 
 }
