@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api;
 
 trait GeneralApiTrait
 {
-    public function returnData($data=null, $msg = null,$status=null)
+    public function returnData($key, $value, $msg = "")
     {
-        $array=[
-            'data'=>$data,
-            'message'=>$msg,
-            'status'=>$status,
-        ];
-        return response()->json($array,$status);
+        return response()->json([
+            'status' => true,
+            'errNum' => "S000",
+            'msg' => $msg,
+            $key => $value
+        ]);
     }
 
     public function returnError($errNum, $msg)
@@ -21,5 +21,13 @@ trait GeneralApiTrait
             'errNum' => $errNum,
             'msg' => $msg
         ]);
+    }
+    public function returnSuccessMessage($msg = "", $errNum = "S000")
+    {
+        return [
+            'status' => true,
+            'errNum' => $errNum,
+            'msg' => $msg
+        ];
     }
 }

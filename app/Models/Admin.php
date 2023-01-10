@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Translatable\HasTranslations;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Admin extends Authenticatable{
+class Admin extends Authenticatable implements JWTSubject{
 
     use HasTranslations;
 
@@ -23,5 +24,15 @@ class Admin extends Authenticatable{
     }
     public function categories(){
         return $this->hasMany('App\Models\Admin','added_by');
+    }
+
+    public function getJWTIdentifier()
+    {
+        // TODO: Implement getJWTIdentifier() method.
+    }
+
+    public function getJWTCustomClaims()
+    {
+        // TODO: Implement getJWTCustomClaims() method.
     }
 }

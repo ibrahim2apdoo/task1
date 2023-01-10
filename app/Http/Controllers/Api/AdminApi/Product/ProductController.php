@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\AdminApi\Product;
 
+use App\Http\Controllers\Api\GeneralApiTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\Api\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\File;
@@ -11,21 +13,13 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use GeneralApiTrait;
     public function index()
     {
-        $categories=Category::all();
-        $products=Product::all();
-        return view('Admin.Product.index',compact('products','categories'));
+        $products=Product::with('category')->get();
+        return $this->returnData( ProductResource::collection($products)  ,"ok",200);
     }
-    public function create()
-    { $categories=Category::all();
-        return view('Admin.Product.create',compact( 'categories'));
-    }
+
 
     public function store(ProductRequest $request)
     {
@@ -41,24 +35,24 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->category_id = $request->category_id;
             $product->save();
-            return redirect()->route('Product.index')->with(['success'=>trans('massage.success')]);
+            return $this->returnData(new ProductResource($product),"Product Has Been Created Successful ",201);
+
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
     }
-    public function edit($product_id)
+    public function show($product_id)
     {
         try {
-            $categories=Category::select('id','name')->get();
             $products=Product::find($product_id);
             if (!$products){
-                return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+                return $this->returnError( 401,"this Product does not exits");
             }else{
-                return view('Admin.Product.edit',compact('products','categories'));
+                return $this->returnData(new ProductResource($products),"ok",200);
             }
 
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
     }
 
@@ -69,7 +63,7 @@ class ProductController extends Controller
             $products=Product::find($product_id);
 
             if (!$products){
-                return redirect()->back()->withErrors(['error'=>trans('massage.no')]);
+                return $this->returnError( 401,"this Product does not exits");
             }else{
                 $products->update([
                     $products->name = ['en' => $request->name_en, 'ar' => $request->name_ar],
@@ -86,29 +80,36 @@ class ProductController extends Controller
                         $products->image = $filePath,
                     ]);
                 }
-                return redirect()->route('Product.index')->with(['success'=>trans('massage.update')]);
+                return $this->returnData(new ProductResource($products),"ok",200);
             }
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
     }
+
+
+
     public function destroy($product_id)
     {
         try {
             $product = Product::find($product_id);
             if (!$product) {
-                return redirect()->back()->withErrors(['error'=>trans('massage.no')]);
+                return $this->returnError( 401,"this Product does not exits");
             }
 
             $deleteImage= Str::after($product->image,'images/') ;
             $deleteImage=base_path('public/images/'.$deleteImage);
             unlink($deleteImage);
             $product->delete();
-            return redirect()->route('Product.index')->with(['success'=>trans('massage.delete')]);
+            return $this->returnData(null ,"Product Has Been Deleted Successful ",201);
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
     }
+
+
+
+
     public function show_product_details($id){
         try {
             $product=Product::find($id);

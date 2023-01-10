@@ -16,16 +16,17 @@ class AdminController extends Controller
 
     public function AllAdmins(){
         $admins=Admin::all();
-        return $this->returnData(AdminResource::collection($admins),"ok",200);
+//        dd($admins);
+        return $this->returnData('Admins',AdminResource::collection($admins),"ok");
     }
 
-    public function edit($admin_id){
+    public function show($admin_id){
         try {
             $admins=Admin::find($admin_id);
             if (!$admins){
                 return $this->returnError( 401,"this Admin does not exits");
             }else{
-                return $this->returnData(new AdminResource($admins),"ok",200);
+                return $this->returnData('Admin', new AdminResource($admins),"ok");
             }
         }catch (\Exception $exception){
             return $this->returnError( 404,"some thing wrong please try later");
@@ -58,9 +59,9 @@ class AdminController extends Controller
             $admin->email = $request->email;
             $admin->password = Hash::make($request['password']);
             $admin->save();
-            return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.success')]);
+            return $this->returnSuccessMessage( "Admin Has Been Created Successful ",201);
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,"some thing wrong please try later");
         }
     }
 
@@ -75,9 +76,10 @@ class AdminController extends Controller
     public function update(AdminRequest $request,$admin_id){
 
         try {
+
             $admins=Admin::find($admin_id);
             if (!$admins){
-                return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+                return $this->returnError( 401,"this Admin does not exits");
             }else{
                 if (!$request->has('status')) {
                     $request->request->add(['status' => false]);
@@ -96,10 +98,10 @@ class AdminController extends Controller
                     $admins->status = $request->status,
                     $admins->Is_admin = $request->Is_admin,
                 ]);
-                return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.update')]);
+                return $this->returnSuccessMessage( "Admin Has Been Updated Successful ",201);
             }
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,"some thing wrong please try later");
         }
     }
 
@@ -108,29 +110,34 @@ class AdminController extends Controller
         try {
             $admin = Admin::find($admin_id);
             if (!$admin) {
-                return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+                return $this->returnError( 401,"this Admin does not exits");
             }else{
                 $admin->delete();
             }
-            return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.delete')]);
+            return $this->returnSuccessMessage( "Admin Has Been Deleted Successful ",201);
 
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,"some thing wrong please try later");
         }
     }
+
+
+
+
+
     public function changeStatus($admin_id)
     {
         try {
             $admin = Admin::find($admin_id);
             if (!$admin) {
-                return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+                return $this->returnError( 401,"this Admin does not exits");
             }
             $active = $admin->status == 0 ? 1 : 0;
             $admin->update([$admin->status=$active]);
-            return redirect()->route('admin.AllAdmins')->with(['success'=>trans('massage.update')]);
+            return $this->returnSuccessMessage( "Admin Status Has Been Changed Successful ",201);
 
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,"some thing wrong please try later");
         }
     }
 }

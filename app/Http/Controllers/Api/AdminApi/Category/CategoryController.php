@@ -21,16 +21,16 @@ class CategoryController extends Controller
     public function index()
     {
         $categories=Category::get();
-        return $this->returnData(CategoryResource::collection($categories),"ok",200);
+        return $this->returnData('categories',CategoryResource::collection($categories),"ok");
     }
-    public function edit($category_id)
+    public function show($category_id)
     {
         try {
             $categories=Category::find($category_id) ;
             if (!$categories){
                 return $this->returnError( 401,"this category does not exits");
             }else{
-                return $this->returnData(new CategoryResource($categories),"ok",200);
+                return $this->returnData('Category',new CategoryResource($categories),"ok");
             }
 
         }catch (\Exception $exception){
@@ -71,9 +71,9 @@ class CategoryController extends Controller
             $category->image = $filePath;
             $category->added_by = auth()->user()->id;
             $category->save();
-            return redirect()->route('Category.index')->with(['success'=>trans('massage.success')]);
+            return $this->returnSuccessMessage(  "Category Has Been Created Successful ",201);
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
     }
 
@@ -85,7 +85,7 @@ class CategoryController extends Controller
             $categories=Category::find($category_id);
 
             if (!$categories){
-                return redirect()->back()->withErrors(['error'=>trans('massage.no')]);
+                return $this->returnError( 401,"this category does not exits");
             }else{
                 $categories->update([
                 $categories->name = ['en' => $request->name_en, 'ar' => $request->name_ar],
@@ -100,30 +100,33 @@ class CategoryController extends Controller
                         $categories->image = $filePath,
                     ]);
                 }
-                return redirect()->route('Category.index')->with(['success'=>trans('massage.update')]);
+                return $this->returnSuccessMessage( "Category Has Been Updated Successful",200);
             }
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
     }
+
+
+
     public function destroy($category_id)
     {
         try {
             $category = Category::find($category_id);
             if (!$category) {
-                return redirect()->back()->withErrors(['error'=>trans('massage.no')]);
+                return $this->returnError( 401,"this category does not exits");
             }
             $product = $category->products();
             if (isset($product) && $product->count() > 0) {
-                return redirect()->route('Category.index')->with(['error' => trans('massage.noPermation')]);
+                return $this->returnError( 404,"You Can Not Delete This Category It Has A Products ");
             }
             $deleteImage= Str::after($category->image,'images/') ;
             $deleteImage=base_path('public/images/'.$deleteImage);
             unlink($deleteImage);
             $category->delete();
-            return redirect()->route('Category.index')->with(['success'=>trans('massage.delete')]);
+            return $this->returnSuccessMessage( "Category Has Been Deleted Successful ",201);
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404,"some thing wrong please try later");
         }
     }
     public function show_product($id)

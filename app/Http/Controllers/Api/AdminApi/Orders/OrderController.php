@@ -2,58 +2,55 @@
 
 namespace App\Http\Controllers\Api\AdminApi\Orders;
 
+use App\Http\Controllers\Api\GeneralApiTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\OrderResource;
 use App\Models\Order;
+use PHPUnit\Exception;
 
 class OrderController extends Controller
 {
+    use GeneralApiTrait;
     public function ShowIndex(){
         $orders=Order::with('products')->get();
-//        return  dd($orders);
-        return view('admin.Orders.index',compact('orders'));
+        return $this->returnData( OrderResource::collection($orders)  ,"ok",200);
     }
-
-
-
-
-
     public function showDetails($order_id){
 
         $orders =Order::find($order_id);
         if (!$orders){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 401,"this Order does not exits");
         }
          $products=$orders->products;
 
-        return view('admin.Orders.show',compact('products' ));
+        return $this->returnData( OrderResource::collection($products)  ,"ok",200);
     }
-
-
-
-
-
-
-
-
     public function destroy($id){
-        $testimonials=Order::find($id);
-        $testimonials->delete();
-        session()->flash('success','massage Deleted successful');
-        return back();
+        try {
+            $orders=Order::find($id);
+            if (!$orders){
+                return $this->returnError( 401,"this Order does not exits");
+            }
+            $orders->delete();
+            return $this->returnData(null  ,"Order Deleted Successful",200);
+        }catch (Exception $exception){
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
+        }
     }
+
     public function changeStatusToPay($order_id){
 
         try {
             $order = Order::find($order_id);
             if (!$order) {
-                return redirect()->back()->with(['error' => 'هذا المنتج غير موجود ']);
+                return $this->returnError( 401,"this Order does not exits");
             }
             $active = $order->status == 'pending' ? 'pay' : 'pending';
             $order->update([$order->status=$active]);
-            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+            return $this->returnData(new OrderResource($order)  ,"change Status To Pay",200);
 
         } catch (\Exception $exception) {
-            return redirect()->back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
 
     }
@@ -63,14 +60,14 @@ class OrderController extends Controller
         try {
             $order = Order::find($order_id);
             if (!$order) {
-                return redirect()->back()->with(['error' => 'هذا المنتج غير موجود']);
+                return $this->returnError( 401,"this Order does not exits");
             }
             $active = $order->status == 'pay' ? 'deliveried' : 'pending';
             $order->update([$order->status=$active]);
-            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+            return $this->returnData(new OrderResource($order)  ,"change Status To Delivered",200);
 
         } catch (\Exception $exception) {
-            return redirect()->back()->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
 
     }
