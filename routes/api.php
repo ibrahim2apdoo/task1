@@ -26,68 +26,70 @@ use Illuminate\Support\Facades\Route;
 */
 ################################################## Start Admin Api  ###############################################
 
-//Route::group(['prefix' => 'admin'], function () {
-//    Route::group(['middleware' => 'guest:admin'], function () {
-//        Route::get('login', [AuthAdmin::class, 'login'])->name('admin.login');
-//        Route::post('login', [AuthAdmin::class, 'dologin'])->name('admin.dologin');
-//
-//    });
-//
-//    Route::group(['middleware' => 'auth:admin'], function () {
 
 Route::group(['prefix' => 'api'], function () {
-    Route::group(['middleware' => [ 'checkpassword','changelanguage']], function () {
-        ################### Start Admin Control Users #####################################
-        Route::get('getAllAdmins', [AdminController::class, 'AllAdmins'])->name('admin.AllAdmins');
-        Route::post('Admins/store', [AdminController::class, 'store'])->name('admin.admin.store');
-        Route::get('Admins/edit/{id}', [AdminController::class, 'show'])->name('admin.show');
-        Route::post('Admins/update/{id}', [AdminController::class, 'update'])->name('admin.update');
-        Route::get('Admins/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-        Route::get('admin/changeStatus/{id}', [AdminController::class, 'changeStatus'])->name('admin.changeStatus');
-        ################### End Admin Control Users #####################################
-        ################### Start Category Control Dashboard #####################################
-        Route::get('Admins/Category', [CategoryController::class, 'index']);
-        Route::get('Admins/Category/show/{category_id}', [CategoryController::class, 'show']);
-        Route::post('Admins/Category/store', [CategoryController::class, 'store'])->name('Category.store');
-        Route::post('Admins/Category/update/{id}', [CategoryController::class, 'update'])->name('Category.update');
-        Route::get('Admins/Category/destroy/{id}', [CategoryController::class, 'destroy'])->name('Category.destroy');
-        ################### End Category Control Dashboard #####################################
-        ################### Start Product Control Dashboard #####################################
-        Route::resource('Admins/Product', ProductController::class);
-        Route::post('Admins/Product/update/{id}', [ProductController::class, 'update'])->name('Product.update');
-        Route::get('Admins/Product/destroy/{id}', [ProductController::class, 'destroy'])->name('Product.destroy');
-        ################### End Product Control Dashboard #####################################
-        ################### Start Partner Control Dashboard #####################################
-        Route::resource('Admins/Partner', PartnerController::class);
-        Route::post('Admins/Partner/update/{id}', [PartnerController::class, 'update'])->name('Partner.update');
-        Route::get('Admins/Partner/destroy/{id}', [PartnerController::class, 'destroy'])->name('Partner.destroy');
-        ################### End Partner Control Dashboard #####################################
-        ################### Start Testimonial Control Dashboard #####################################
-        Route::get('testimonial/showindex', [TestimonialController::class, 'ShowIndex'])->name('testimonial.showindex');
-        Route::get('testimonial/{id}', [TestimonialController::class, 'destroy'])->name('testimonial.destroy');
-        Route::get('changeStatus/{id}', [TestimonialController::class, 'changeStatus'])->name('testimonial.status');
-        ################### End Testimonial Control Dashboard #####################################
-        ################### Start Orders Control Dashboard #####################################
-        Route::get('orders/showindex', [OrderController::class, 'ShowIndex'])->name('orders.showindex');
-        Route::get('orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
-        Route::get('showDetails/{id}', [OrderController::class, 'showDetails'])->name('orders.showDetails');
-        Route::get('changeStatusToPay/{id}', [OrderController::class, 'changeStatusToPay'])->name('orders.changeStatusToPay');
-        Route::get('changeStatusToDelivered/{id}', [OrderController::class, 'changeStatusToDelivered'])->name('orders.changeStatusToDelivered');
-        ################### End Orders Control Dashboard #####################################
+
+    Route::group(['prefix' => 'admin'], function () {
+
+        Route::post('login', [AuthAdmin::class, 'login']);
+        Route::post('logout', [AuthAdmin::class, 'logout'])->middleware('auth.guard:apiAdmin');
+
+    });
 
 
-        Route::get('admin/logout', [AuthAdmin::class, 'logout'])->name('admin.logout');
+    Route::group(['middleware' => ['changelanguage','auth.guard:apiAdmin' ]], function () {
+
+
+
+            ################### Start Admin Control Users #####################################
+            Route::get('getAllAdmins', [AdminController::class, 'AllAdmins'])->name('admin.AllAdmins');
+            Route::post('Admins/store', [AdminController::class, 'store'])->name('admin.admin.store');
+            Route::get('Admins/edit/{id}', [AdminController::class, 'show'])->name('admin.show');
+            Route::post('Admins/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+            Route::get('Admins/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+            Route::get('admin/changeStatus/{id}', [AdminController::class, 'changeStatus'])->name('admin.changeStatus');
+            ################### End Admin Control Users #####################################
+            ################### Start Category Control Dashboard #####################################
+            Route::get('Admins/Category', [CategoryController::class, 'index']);
+            Route::get('Admins/Category/show/{category_id}', [CategoryController::class, 'show']);
+            Route::post('Admins/Category/store', [CategoryController::class, 'store'])->name('Category.store');
+            Route::post('Admins/Category/update/{id}', [CategoryController::class, 'update'])->name('Category.update');
+            Route::get('Admins/Category/destroy/{id}', [CategoryController::class, 'destroy'])->name('Category.destroy');
+            ################### End Category Control Dashboard #####################################
+            ################### Start Product Control Dashboard #####################################
+            Route::resource('Admins/Product', ProductController::class);
+            Route::post('Admins/Product/update/{id}', [ProductController::class, 'update'])->name('Product.update');
+            Route::get('Admins/Product/destroy/{id}', [ProductController::class, 'destroy'])->name('Product.destroy');
+            ################### End Product Control Dashboard #####################################
+            ################### Start Partner Control Dashboard #####################################
+            Route::resource('Admins/Partner', PartnerController::class);
+            Route::post('Admins/Partner/update/{id}', [PartnerController::class, 'update'])->name('Partner.update');
+            Route::get('Admins/Partner/destroy/{id}', [PartnerController::class, 'destroy'])->name('Partner.destroy');
+            ################### End Partner Control Dashboard #####################################
+            ################### Start Testimonial Control Dashboard #####################################
+            Route::get('testimonial/showindex', [TestimonialController::class, 'ShowIndex'])->name('testimonial.showindex');
+            Route::get('testimonial/{id}', [TestimonialController::class, 'destroy'])->name('testimonial.destroy');
+            Route::get('changeStatus/{id}', [TestimonialController::class, 'changeStatus'])->name('testimonial.status');
+            ################### End Testimonial Control Dashboard #####################################
+            ################### Start Orders Control Dashboard #####################################
+            Route::get('orders/showindex', [OrderController::class, 'ShowIndex'])->name('orders.showindex');
+            Route::get('orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+            Route::get('showDetails/{id}', [OrderController::class, 'showDetails'])->name('orders.showDetails');
+            Route::get('changeStatusToPay/{id}', [OrderController::class, 'changeStatusToPay'])->name('orders.changeStatusToPay');
+            Route::get('changeStatusToDelivered/{id}', [OrderController::class, 'changeStatusToDelivered'])->name('orders.changeStatusToDelivered');
+            ################### End Orders Control Dashboard #####################################
+
+
+
 ################################################## End Admin Api  ###############################################
 ///////////////////////////////////////////////////End Admin Api/////////////////////////////////////////////////
 
 #################################################################################################################
 
-
+        });
 ///////////////////////////////////////////////////Start User Api////////////////////////////////////////////////
 ################################################## Start User Api  ###############################################
 
-        Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
 
         Route::get('/show_product/{id}', [CategoryController::class, 'show_product'])->middleware('auth');
@@ -118,6 +120,6 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('product-Order', [OrderController::class, 'getOrderById']);
 
     });
-});
+
 
 ################################################## End User Api    ###############################################

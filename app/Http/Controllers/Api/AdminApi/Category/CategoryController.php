@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Http\Resources\Api\CategoryResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -69,7 +70,7 @@ class CategoryController extends Controller
             $category->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
             $category->description = ['en' => $request->description_en, 'ar' => $request->description_ar];
             $category->image = $filePath;
-            $category->added_by = auth()->user()->id;
+            $category->added_by = Auth::guard('apiAdmin')-> user()->id;/* auth()->user()->id; */
             $category->save();
             return $this->returnSuccessMessage(  "Category Has Been Created Successful ",201);
         }catch (\Exception $exception){

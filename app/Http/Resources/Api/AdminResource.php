@@ -21,6 +21,7 @@ class AdminResource extends JsonResource
              'password' =>     $this->password,
              'status'   =>     $this->status,
              'Is_admin' =>     $this->Is_admin,
+             'api_token' =>     $this->api_token,
          ];
 
     }

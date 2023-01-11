@@ -56,6 +56,8 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'checkpassword' => \App\Http\Middleware\CheckPassword::class,
         'changelanguage' => \App\Http\Middleware\ChangeLanguage::class,
+//        'checkAdminToken' => \App\Http\Middleware\CheckAdminToken::class,
+        'auth.guard' => \App\Http\Middleware\AssignGuard::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

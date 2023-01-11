@@ -16,7 +16,7 @@ class PartnerController extends Controller
     public function index()
     {
         $partners=Partner::all();
-        return $this->returnData( PartnerResource::collection($partners)  ,"ok",200);
+        return $this->returnData('Partners', PartnerResource::collection($partners)  ,"ok");
     }
 
 
@@ -31,7 +31,8 @@ class PartnerController extends Controller
             $partner->description = ['en' => $request->description_en, 'ar' => $request->description_ar];
             $partner->logo = $filePath;
             $partner->save();
-            return $this->returnData(new PartnerResource($partner)  ,"ok",200);
+            return $this->returnSuccessMessage(  "Partner Has Been Created Successful ",201);
+
         }catch (\Exception $exception){
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
@@ -43,7 +44,7 @@ class PartnerController extends Controller
             if (!$partners){
                 return $this->returnError( 401,"this Partner does not exits");
             }else{
-                return $this->returnData(new PartnerResource($partners)  ,"ok",200);
+                return $this->returnData('Partner',new PartnerResource($partners)  ,"ok" );
             }
 
         }catch (\Exception $exception){
@@ -78,7 +79,7 @@ class PartnerController extends Controller
                         $partners->logo = $filePath,
                     ]);
                 }
-                return $this->returnData(new PartnerResource($partners)  ,"Partner updated Successful",200);
+                return $this->returnSuccessMessage( "Partner updated Successful",200);
             }
         }catch (\Exception $exception){
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
@@ -96,7 +97,7 @@ class PartnerController extends Controller
             $deleteImage=base_path('public/images/'.$deleteImage);
             unlink($deleteImage);
             $partner->delete();
-            return $this->returnData(null  ,"Partner Deleted Successful",200);
+            return $this->returnSuccessMessage( "Partner Deleted Successful",200);
         } catch (\Exception $exception) {
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }

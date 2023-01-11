@@ -28,11 +28,16 @@ class Admin extends Authenticatable implements JWTSubject{
 
     public function getJWTIdentifier()
     {
-        // TODO: Implement getJWTIdentifier() method.
+        return $this->getKey();
     }
 
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
     public function getJWTCustomClaims()
     {
-        // TODO: Implement getJWTCustomClaims() method.
+        return [];
     }
 }

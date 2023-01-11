@@ -13,7 +13,7 @@ class TestimonialController extends Controller
     use GeneralApiTrait;
     public function ShowIndex(){
         $testimonials=Testimonial::all();
-        return $this->returnData( TestimonialResource::collection($testimonials)  ,"ok",200);
+        return $this->returnData('Testimonials', TestimonialResource::collection($testimonials)  ,"ok" );
     }
     public function destroy($id){
         try {
@@ -22,7 +22,7 @@ class TestimonialController extends Controller
                 return $this->returnError( 401,"this Testimonial does not exits");
             }
             $testimonials->delete();
-            return $this->returnData(null  ,"Testimonial Deleted Successful",200);
+            return $this->returnSuccessMessage( "Testimonial Deleted Successful",200);
         }catch (Exception $exception){
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
@@ -37,7 +37,7 @@ class TestimonialController extends Controller
             }
             $active = $testimonial->status == 0 ? 1 : 0;
             $testimonial->update([$testimonial->status=$active]);
-            return $this->returnData(new TestimonialResource($testimonial)  ,"ok",200);
+            return $this->returnSuccessMessage(   "Testimonial Status Has Been Changed Successful",200);
 
         } catch (\Exception $exception) {
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");

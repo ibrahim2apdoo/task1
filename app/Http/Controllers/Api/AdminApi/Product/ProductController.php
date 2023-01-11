@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         $products=Product::with('category')->get();
-        return $this->returnData( ProductResource::collection($products)  ,"ok",200);
+        return $this->returnData('Product', ProductResource::collection($products)  ,"ok" );
     }
 
 
@@ -35,10 +35,10 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->category_id = $request->category_id;
             $product->save();
-            return $this->returnData(new ProductResource($product),"Product Has Been Created Successful ",201);
+            return $this->returnSuccessMessage ("Product Has Been Created Successful ",201);
 
         }catch (\Exception $exception){
-            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
+            return $this->returnError( 404, "some thing wrong please try later");
         }
     }
     public function show($product_id)
@@ -48,11 +48,11 @@ class ProductController extends Controller
             if (!$products){
                 return $this->returnError( 401,"this Product does not exits");
             }else{
-                return $this->returnData(new ProductResource($products),"ok",200);
+                return $this->returnData('Product',new ProductResource($products),"ok" );
             }
 
         }catch (\Exception $exception){
-            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
+            return $this->returnError( 404, "some thing wrong please try later");
         }
     }
 
@@ -80,10 +80,10 @@ class ProductController extends Controller
                         $products->image = $filePath,
                     ]);
                 }
-                return $this->returnData(new ProductResource($products),"ok",200);
+                return $this->returnSuccessMessage("Product updated Successful",200);
             }
         }catch (\Exception $exception){
-            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
+            return $this->returnError( 404, "some thing wrong please try later");
         }
     }
 
@@ -101,9 +101,9 @@ class ProductController extends Controller
             $deleteImage=base_path('public/images/'.$deleteImage);
             unlink($deleteImage);
             $product->delete();
-            return $this->returnData(null ,"Product Has Been Deleted Successful ",201);
+            return $this->returnSuccessMessage( "Product Has Been Deleted Successful ",201);
         } catch (\Exception $exception) {
-            return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
+            return $this->returnError( 404, "some thing wrong please try later");
         }
     }
 

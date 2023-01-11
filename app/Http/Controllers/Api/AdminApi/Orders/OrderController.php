@@ -13,7 +13,7 @@ class OrderController extends Controller
     use GeneralApiTrait;
     public function ShowIndex(){
         $orders=Order::with('products')->get();
-        return $this->returnData( OrderResource::collection($orders)  ,"ok",200);
+        return $this->returnData( 'Orders',OrderResource::collection($orders)  ,"ok");
     }
     public function showDetails($order_id){
 
@@ -23,7 +23,7 @@ class OrderController extends Controller
         }
          $products=$orders->products;
 
-        return $this->returnData( OrderResource::collection($products)  ,"ok",200);
+        return $this->returnData('products', OrderResource::collection($products)  ,"ok");
     }
     public function destroy($id){
         try {
@@ -32,7 +32,7 @@ class OrderController extends Controller
                 return $this->returnError( 401,"this Order does not exits");
             }
             $orders->delete();
-            return $this->returnData(null  ,"Order Deleted Successful",200);
+            return $this->returnSuccessMessage( "Order Deleted Successful",200);
         }catch (Exception $exception){
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
         }
@@ -47,7 +47,7 @@ class OrderController extends Controller
             }
             $active = $order->status == 'pending' ? 'pay' : 'pending';
             $order->update([$order->status=$active]);
-            return $this->returnData(new OrderResource($order)  ,"change Status To Pay",200);
+            return $this->returnSuccessMessage( " Status changed To Pay Successful",200);
 
         } catch (\Exception $exception) {
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
@@ -64,7 +64,7 @@ class OrderController extends Controller
             }
             $active = $order->status == 'pay' ? 'deliveried' : 'pending';
             $order->update([$order->status=$active]);
-            return $this->returnData(new OrderResource($order)  ,"change Status To Delivered",200);
+            return $this->returnSuccessMessage (" Status changed To Delivered Successful",200);
 
         } catch (\Exception $exception) {
             return $this->returnError( 404,$exception->getMessage()."some thing wrong please try later");
