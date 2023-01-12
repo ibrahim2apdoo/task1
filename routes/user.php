@@ -24,42 +24,27 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => 'api'], function () {
-
-
         Route::group(['prefix' => 'user'], function () {
-
             Route::post('login', [AuthUser::class, 'login']);
             Route::post('logout', [AuthUser::class, 'logout'])->middleware('auth.guard:user-api');
 
-        });
-
-
 ///////////////////////////////////////////////////Start User Api////////////////////////////////////////////////
 ################################################## Start User Api  ###############################################
-
-
-
-        Route::get('/show_product/{id}', [CategoryController::class, 'show_product'])->middleware('auth');
-
+        Route::get('/show_product/{id}', [CategoryController::class, 'show_product'])->middleware('auth.guard:user-api');
 ############################# Start Cart ###################################
-        Route::post('update-cart', [CartController::class, 'updateCart'])->name('cart.update');
-        Route::post('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
-        Route::post('cart', [CartController::class, 'addToMyCart'])->name('cart.storetocart');
-        Route::get('cartlist', [CartController::class, 'cartlist'])->name('cart.cartlist');
-        Route::post('cartremove/{product_id}', [CartController::class, 'removeCart'])->name('cart.remove');
+        Route::post('cart', [CartController::class, 'addToMyCart']) ;
+        Route::get('cartlist', [CartController::class, 'cartlist']) ;
+        Route::post('update-cart', [CartController::class, 'updateCart']) ;
+        Route::post('clear', [CartController::class, 'clearAllCart']) ;
+        Route::post('cartremove/{product_id}', [CartController::class, 'removeCart']) ;
 ############################# End Cart ###################################
-
-############################## Start Testimonial ###################################
-        Route::get('Testimonial', [TestimonialController::class, 'index'])->name('Testimonial')->middleware('auth');
-        Route::post('Testimonial', [TestimonialController::class, 'create'])->name('create.Testimonial')->middleware('auth');
-
+############################# Start Testimonial ###################################
+//        Route::get('Testimonial', [TestimonialController::class, 'index'])->middleware('auth.guard:user-api');
+        Route::post('Testimonial', [TestimonialController::class, 'create']) ->middleware('auth.guard:user-api');
 ############################# End Testimonial ###################################
-
-        Route::get('/show_product_details/{id}', [ProductController::class, 'show_product_details'])->middleware('auth');
-        Route::post('/addOrder', [OrderController::class, 'addOrder'])->name('order.add')->middleware('auth');
-        Route::get('product-Order', [OrderController::class, 'getOrderById']);
-
+        Route::get('/show_product_details/{id}', [ProductController::class, 'show_product_details'])->middleware('auth.guard:user-api');
+        Route::post('/addOrder', [OrderController::class, 'addOrder'])->name('order.add')->middleware('auth.guard:user-api');
     });
-
+});
 
 ################################################## End User Api    ###############################################

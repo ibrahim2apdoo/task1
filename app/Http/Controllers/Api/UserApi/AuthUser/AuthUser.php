@@ -30,9 +30,9 @@ class AuthUser extends Controller
 
             //login
 
-            $credentials = $request->only(['email', 'password']);
+              $credentials = $request->only(['email', 'password']);
 
-            $token = Auth::guard('user-api')->attempt($credentials);
+             $token = Auth::guard('user-api')->attempt($credentials);
 
             if (!$token)
                 return $this->returnError('E001', 'بيانات الدخول غير صحيحة');
@@ -51,18 +51,19 @@ class AuthUser extends Controller
     public function logout(Request $request)
     {
 
-        $token = $request->header('auth-token');
-        if ($token) {
+//        $token = $request->header('auth-token');
+//        if ($token) {
             try {
-                JWTAuth::setToken($token)->invalidate(); //logout user
-
+//                JWTAuth::setToken($token)->invalidate(); //logout user
+                Auth::guard('user-api')->logout();
             } catch (TokenInvalidException $e) {
                 return $this->returnError('405', 'some ting went wrong');
             }
             return $this->returnSuccessMessage('تم تسجيل الخروج بنجاح', '200');
-        } else {
-            return $this->returnError('405', 'some ting went wrong');
-        }
-
     }
+//        } else {
+//            return $this->returnError('405', 'some ting went wrong');
+//        }
+//
+//    }
 }

@@ -2,25 +2,33 @@
 
 namespace App\Http\Controllers\Api\UserApi\Order;
 
+use App\Http\Controllers\Api\GeneralApiTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Models\Cart;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function addOrder(OrderRequest $request)
+    use GeneralApiTrait;
+    public function addOrder(Request $request)
     {
-//dd($request);
+
         try {
             DB::beginTransaction();
-            $user = auth('web')->user();
-            $order = $user->orders()->create(['Total' => request('Total')]); // insert into orders table user id and total price
+            $user = auth()->guard('user-api')->user();
 
+            $cart_id = Cart::where('user_id', auth()->guard('user-api')->user()->id)->first();
+            $productList = Cart::with('products')->find($cart_id);
+            $total=0;
+            foreach ($productList as $products)
+                foreach($products -> products as $product)
+                    $total +=$product->pivot->quantity * $product->price;
+            $order = $user->orders()->create(['Total' => $total]); // insert into orders table user id and total price
 //            $order->products()->attach($request->products); add products with attach method
-
             $products=$request->products;
             $quantities=$request->quantity;
             for ($i=0; $i<count($products); $i++){
@@ -32,10 +40,10 @@ class OrderController extends Controller
             }
             Cart::where('user_id', auth()->user()->id)->delete();
             DB::commit();
-            return redirect()->route('cart.cartlist')->with(['success' => trans('massage.success')]);
+            return $this->returnSuccessMessage('Your Orders Added Successful',201);
         } catch (\Exception $exception) {
-            return $exception->getMessage();
-            return redirect()->back()->withErrors(['error' => trans('massage.error')]);
+            DB::rollBack();
+            return $this->returnError( 404, "some thing wrong please try later");
         }
     }
 }

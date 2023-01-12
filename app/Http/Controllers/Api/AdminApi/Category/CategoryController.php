@@ -132,8 +132,16 @@ class CategoryController extends Controller
     }
     public function show_product($id)
     {
+        try {
+            $categories=Category::with('products')->find($id);
+            if (!$categories) {
+                return $this->returnError( 401,"this category does not exits");
+            }
+            return $this->returnData('Category', $categories ,"ok");
+//            return view('website.home.show' ,compact('categories'));
+        }catch (\Exception $exception) {
+            return $this->returnError( 404,"some thing wrong please try later");
+        }
 
-        $categories=Category::find($id);
-        return view('website.home.show' ,compact('categories'));
     }
 }

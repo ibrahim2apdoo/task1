@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\UserApi\Cart;
 
+use App\Http\Controllers\Api\GeneralApiTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Cart_Product;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
+    use GeneralApiTrait;
     public function addToMyCart(Request $request)
     {
 
@@ -18,15 +20,15 @@ class CartController extends Controller
         try {
             DB::beginTransaction();
             Cart::updateOrCreate([
-                'user_id' => auth()->user()->id,
+                'user_id' => auth()->guard('user-api')->user()->id,
             ]);
 
-            $cart_id = Cart::where('user_id', auth()->user()->id)->first();
+            $cart_id = Cart::where('user_id', auth()->guard('user-api')->user()->id)->first();
 
               $product= Cart_Product::where('cart_id',$cart_id->id)->where('product_id', $request->product_id)->first();
             if($product){
                 if ($product->product_id == $request->product_id){
-                    Cart_Product::where('product_id', $product->product_id)->update([
+                    Cart_Product::where('cart_id',$cart_id->id)->where('product_id', $request->product_id)->update([
                         'quantity' => $request->quantity +$product->quantity ,
                     ]);
                 }
@@ -39,11 +41,10 @@ class CartController extends Controller
                 ]);
             }
             DB::commit();
-            return redirect()->route('cart.cartlist');
+            return $this->returnSuccessMessage('The Product Added To Your Cart Successful','201');
 
         } catch (\Exception $exception) {
-            return $exception->getMessage();
-            return redirect()->back()->withErrors(['error' => trans('massage.error')]);
+            return $this->returnError('Some Thing Went Wrong ','4001');
         }
 
     }
@@ -52,13 +53,13 @@ class CartController extends Controller
     public function cartlist()
     {
         try {
-            $cart_id = Cart::where('user_id', auth()->user()->id)->first();
+            $cart_id = Cart::where('user_id', auth()->guard('user-api')->user()->id)->first();
             $productList = Cart::with('products')->find($cart_id);
 
-            return view('website.userProduct.MyCart', compact('productList'));
+//            return view('website.userProduct.MyCart', compact('productList'));
+            return $this->returnData('productList',$productList,'ok');
         } catch (\Exception $exception) {
-            return $exception->getMessage();
-            return redirect()->back()->withErrors(['error' => trans('massage.error')]);
+            return $this->returnError('Some Thing Went Wrong ','4001');
         }
 
     }
@@ -68,10 +69,9 @@ class CartController extends Controller
     {
         try {
             Cart_Product::where('product_id', $product_id)->delete();
-            return redirect()->back();
+            return $this->returnSuccessMessage('The Product Deleted Successful In Your Cart','201');
         } catch (\Exception $exception) {
-            return $exception->getMessage();
-            return redirect()->back()->withErrors(['error' => trans('massage.error')]);
+            return $this->returnError('Some Thing Went Wrong ','4001');
         }
 
     }
@@ -82,10 +82,9 @@ class CartController extends Controller
             Cart_Product::where('product_id', $request->id)->update([
                 'quantity' => $request->quantity,
             ]);
-            return redirect()->back();
+            return $this->returnSuccessMessage('The Product Quantity Updated Successful','201');
         } catch (\Exception $exception) {
-            return $exception->getMessage();
-            return redirect()->back()->withErrors(['error' => trans('massage.error')]);
+            return $this->returnError('Some Thing Went Wrong ','4001');
         }
 
     }
@@ -115,10 +114,9 @@ class CartController extends Controller
         try {
             $product_cart = Cart_Product::where('product_id', $request->id)->first();
             Cart::where('id', $product_cart->cart_id)->delete();
-            return redirect()->route('home');
+            return $this->returnSuccessMessage('Your Cart Is Cleared Successful','201');
         } catch (\Exception $exception) {
-            return $exception->getMessage();
-            return redirect()->back()->withErrors(['error' => trans('massage.error')]);
+            return $this->returnError('Some Thing Went Wrong ','4001');
         }
 
     }

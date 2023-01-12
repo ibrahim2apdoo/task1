@@ -114,11 +114,11 @@ class ProductController extends Controller
         try {
             $product=Product::find($id);
             if (!$product){
-                return redirect()->back()->withErrors(['error'=>trans('massage.no')]);
+                return $this->returnError( 401,"this Product does not exits");
             }
-            return view('website.home.show_product_details',compact('product'));
+            return $this->returnData('Product',new ProductResource($product),"ok" );
         }catch (\Exception $exception){
-            return redirect()->back()->withErrors(['error'=>trans('massage.error')]);
+            return $this->returnError( 404, "some thing wrong please try later");
         }
 
 

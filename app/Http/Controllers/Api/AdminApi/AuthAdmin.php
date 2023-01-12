@@ -60,18 +60,19 @@ use  GeneralApiTrait;
 
     public function logout( Request  $request){
 
-        $token=$request->header('auth-token');
-        if ($token){
-            try {
-                JWTAuth::setToken($token)->invalidate(); //logout user
-
-            }catch (TokenInvalidException $e){
-                return   $this->returnError('405','some ting went wrong');
-            }
-            return $this->returnSuccessMessage('تم تسجيل الخروج بنجاح','200');
-        }else{
-            return   $this->returnError('405','some ting went wrong');
+//        $token=$request->header('auth-token');
+//        if ($token){
+        try {
+//                JWTAuth::setToken($token)->invalidate(); //logout user
+            Auth::guard('apiAdmin')->logout();
+        } catch (TokenInvalidException $e) {
+            return $this->returnError('405', 'some ting went wrong');
         }
+        return $this->returnSuccessMessage('تم تسجيل الخروج بنجاح', '200');
+    }
+//        }else{
+//            return   $this->returnError('405','some ting went wrong');
+//        }
 
 //        try {
 //
@@ -105,7 +106,7 @@ use  GeneralApiTrait;
 //            return $this->returnError('E001', 'هناك خطا بالبيانات');
 //        }
 
-    }
+//    }
 
 //    public function logout()
 //    {
