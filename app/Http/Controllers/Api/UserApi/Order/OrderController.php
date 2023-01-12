@@ -43,7 +43,7 @@ class OrderController extends Controller
             return $this->returnSuccessMessage('Your Orders Added Successful',201);
         } catch (\Exception $exception) {
             DB::rollBack();
-            return $this->returnError( 404, "some thing wrong please try later");
+            return $this->returnError( 404, $exception->getMessage()." some thing wrong please try later");
         }
     }
 }

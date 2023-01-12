@@ -4,6 +4,7 @@
 use App\Http\Controllers\Api\AdminApi\Category\CategoryController;
 use App\Http\Controllers\Api\AdminApi\Product\ProductController;
 use App\Http\Controllers\Api\UserApi\AuthUser\AuthUser;
+use App\Http\Controllers\Api\UserApi\AuthUser\RegisterController;
 use App\Http\Controllers\Api\UserApi\Cart\CartController;
 use App\Http\Controllers\Api\UserApi\Order\OrderController;
 use App\Http\Controllers\Api\UserApi\Testimonial\TestimonialController;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'api'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::post('login', [AuthUser::class, 'login']);
+            Route::post('register', [RegisterController::class, 'Register']);
             Route::post('logout', [AuthUser::class, 'logout'])->middleware('auth.guard:user-api');
 
 ///////////////////////////////////////////////////Start User Api////////////////////////////////////////////////

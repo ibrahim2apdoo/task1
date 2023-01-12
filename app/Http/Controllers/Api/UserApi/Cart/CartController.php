@@ -50,10 +50,25 @@ class CartController extends Controller
     }
 
 
+//    public function cartlist()
+//    {
+//        try {
+//            $cart_id = Cart::where('user_id', auth()->guard('user-api')->user()->id)->get();
+//            return $cart_id;
+//            $productList = Cart::with('products')->find($cart_id);
+//
+////            return view('website.userProduct.MyCart', compact('productList'));
+//            return $this->returnData('productList',$productList,'ok');
+//        } catch (\Exception $exception) {
+//            return $this->returnError($exception->getMessage().'Some Thing Went Wrong ','4001');
+//        }
+//
+//    }
     public function cartlist()
     {
         try {
             $cart_id = Cart::where('user_id', auth()->guard('user-api')->user()->id)->first();
+
             $productList = Cart::with('products')->find($cart_id);
 
 //            return view('website.userProduct.MyCart', compact('productList'));
@@ -78,13 +93,15 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
+
         try {
-            Cart_Product::where('product_id', $request->id)->update([
+            $cart_id = Cart::where('user_id', auth()->guard('user-api')->user()->id)->first();
+            Cart_Product::where('cart_id',$cart_id->id)->where('product_id', $request->id)->update([
                 'quantity' => $request->quantity,
             ]);
             return $this->returnSuccessMessage('The Product Quantity Updated Successful','201');
         } catch (\Exception $exception) {
-            return $this->returnError('Some Thing Went Wrong ','4001');
+            return $this->returnError($exception->getMessage().' Some Thing Went Wrong ','4001');
         }
 
     }
@@ -112,11 +129,10 @@ class CartController extends Controller
     public function clearAllCart(Request $request)
     {
         try {
-            $product_cart = Cart_Product::where('product_id', $request->id)->first();
-            Cart::where('id', $product_cart->cart_id)->delete();
+            Cart::where('id',$request->id)->where('user_id',auth()->guard('user-api')->user()->id)->delete();
             return $this->returnSuccessMessage('Your Cart Is Cleared Successful','201');
         } catch (\Exception $exception) {
-            return $this->returnError('Some Thing Went Wrong ','4001');
+            return $this->returnError($exception->getMessage().'Some Thing Went Wrong ','4001');
         }
 
     }
